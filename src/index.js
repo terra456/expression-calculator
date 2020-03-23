@@ -40,28 +40,40 @@ function expressionCalculator(expr) {
         } else if (isNaN(el) === false) {
             var n = resArr.push(el);
 
-        } else if (el == '(') {
-                    var k = steck.push(el);
+        } else if (el === '(') {
+            
+             
+                 var k = steck.push(el);
+             
+            
             
                 
-        } else if (el == '-' || el == '+') {
-            if (steck[steck.length - 1] == '-' || steck[steck.length - 1] == '+') {
+        } else if (el === '-' || el === '+') {
+            if (steck[steck.length - 1] === '-' || steck[steck.length - 1] === '+') {
                 let n = resArr.push(steck[steck.length - 1]);
                 var d = steck.pop();
                 let m = steck.push(el);
-            } else if (steck[steck.length - 1] == '*' || steck[steck.length - 1] == '/') {
+                console.log('what is this');
+            } else if (steck[steck.length - 1] === '*' || steck[steck.length - 1] === '/') {
                 let n = resArr.push(steck[steck.length - 1]);
                 var d = steck.pop();
-                let m = steck.push(el);
+                if (steck[steck.length - 1] === '-' || steck[steck.length - 1] === '+') {
+                    let n = resArr.push(steck[steck.length - 1]);
+                    var d = steck.pop();
+                    let m = steck.push(el);
+                } else {
+                    let m = steck.push(el);
+                }
+                
             } else {
                 let m = steck.push(el);
             }
-        } else if (el == '*' || el == '/') {
-            if (steck[steck.length - 1] == '*' || steck[steck.length - 1] == '/') {
+        } else if (el === '*' || el === '/') {
+            if (steck[steck.length - 1] === '*' || steck[steck.length - 1] === '/') {
                 let n = resArr.push(steck[steck.length - 1]);
                 var d = steck.pop();
                 let m = steck.push(el);
-            } else if (steck[steck.length - 1] == '+' || steck[steck.length - 1] == '-') {
+            } else if (steck[steck.length - 1] === '+' || steck[steck.length - 1] === '-') {
                 let n = steck.push(el);
             } else {
                 let m = steck.push(el);
@@ -79,9 +91,15 @@ function expressionCalculator(expr) {
                         var d = steck.pop();
 
 
-                    } else if (steck[j] == '(') {
+                    } else if (steck[j] === '(') {
                         var d = steck.pop();
-                        
+                        // if (steck[j-1] === '-' || steck[j-1] === '+') {
+                        //     var n = resArr.push(steck[j-1]);
+                            
+                        //     var d = steck.pop();
+                            
+                        // } 
+                        j = -1;
                     }
                 }
             }
