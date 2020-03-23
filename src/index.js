@@ -20,7 +20,7 @@ function expressionCalculator(expr) {
             var del = arrN.splice(i, 1);
             i = i-1;
         } else if (isNaN(el) === false) {
-            var n = arr.push(el);
+            var n = arr.push(parseInt(el));
         } else if (el.length != 0) {
             for (var j=0; j<el.length; j++) {
                 var n = arr.push(el[j]);
@@ -40,10 +40,16 @@ function expressionCalculator(expr) {
         } else if (isNaN(el) === false) {
             var n = resArr.push(el);
 
-        } else if (el === '(') {
-            var k = steck.push(el);
+        } else if (el == '(') {
+                    var k = steck.push(el);
+            
+                
         } else if (el == '-' || el == '+') {
             if (steck[steck.length - 1] == '-' || steck[steck.length - 1] == '+') {
+                let n = resArr.push(steck[steck.length - 1]);
+                var d = steck.pop();
+                let m = steck.push(el);
+            } else if (steck[steck.length - 1] == '*' || steck[steck.length - 1] == '/') {
                 let n = resArr.push(steck[steck.length - 1]);
                 var d = steck.pop();
                 let m = steck.push(el);
@@ -56,7 +62,7 @@ function expressionCalculator(expr) {
                 var d = steck.pop();
                 let m = steck.push(el);
             } else if (steck[steck.length - 1] == '+' || steck[steck.length - 1] == '-') {
-                let n = resArr.push(el);
+                let n = steck.push(el);
             } else {
                 let m = steck.push(el);
             }
@@ -64,7 +70,7 @@ function expressionCalculator(expr) {
 
             if (steck.includes('(') === false) {
                 // return error('ERRR');
-                throw TypeError ('ExpressionError: Brackets must be paired:');
+                throw TypeError ('ExpressionError: Brackets must be paired');
             } else {
                 for (let j = steck.length - 1; j >= 0; j--) {
                     if (steck[j] != '(') {
@@ -72,9 +78,10 @@ function expressionCalculator(expr) {
                         var n = resArr.push(steck[j]);
                         var d = steck.pop();
 
+
                     } else if (steck[j] == '(') {
                         var d = steck.pop();
-
+                        
                     }
                 }
             }
@@ -84,7 +91,7 @@ function expressionCalculator(expr) {
     if (steck.length != 0) {
         if (steck.includes('(') === true) {
             // return error('ERRR');
-            throw TypeError ('ExpressionError: Brackets must be paired:');
+            throw TypeError ('ExpressionError: Brackets must be paired');
         } else {
             for (let j = steck.length - 1; j >= 0; j--) {
                 var n = resArr.push(steck[j]);
@@ -103,21 +110,21 @@ function expressionCalculator(expr) {
         if (isNaN(el) === false) {
             var n = res.push(el);
         } else if (el == '*') {
-            var s = res[0]*res[1];
-            var d = res.splice(0, 2);
+            var s = res[res.length - 2]*res[res.length - 1];
+            var d = res.splice(res.length - 2, 2);
             var n = res.push(s);
         } else if (el == '/') {
-            var s = res[0]/res[1];
-            var d = res.splice(0, 2);
+            var s = res[res.length - 2]/res[res.length - 1];
+            var d = res.splice(res.length - 2, 2);
             var n = res.push(s);
         } else if (el == '-') {
-            var s = res[0]-res[1];
-            var d = res.splice(0, 2);
+            var s = res[res.length - 2]-res[res.length - 1];
+            var d = res.splice(res.length - 2, 2);
             var n = res.push(s);
         } else if (el == '+') {
-            var sum = res[0]+res[1];
-            var s = parseInt(sum);
-            var d = res.splice(0, 2);
+            var s = res[res.length - 2]+res[res.length - 1];
+            
+            var d = res.splice(res.length - 2, 2);
             var n = res.push(s);
         }
         
@@ -129,8 +136,9 @@ function expressionCalculator(expr) {
     if (result == Infinity) {
         throw TypeError ('TypeError: Division by zero.');
     } else {
+        console.log(res, expr, resArr.join(''));
         return result;
-        console.log(result);
+        
     }
 
 }
