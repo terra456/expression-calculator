@@ -69,7 +69,11 @@ function expressionCalculator(expr) {
                 let m = steck.push(el);
             }
         } else if (el === '*' || el === '/') {
-            if (steck[steck.length - 1] === '*' || steck[steck.length - 1] === '/') {
+            if (el === '/' && arr[i+1] == 0) {
+                throw TypeError ('TypeError: Division by zero.');
+            }
+
+            else if (steck[steck.length - 1] === '*' || steck[steck.length - 1] === '/') {
                 let n = resArr.push(steck[steck.length - 1]);
                 var d = steck.pop();
                 let m = steck.push(el);
@@ -151,13 +155,9 @@ function expressionCalculator(expr) {
 
     var result = res[0];
 
-    if (result == Infinity) {
-        throw TypeError ('TypeError: Division by zero.');
-    } else {
-        console.log(res, expr, resArr.join(''));
-        return result;
+    return result;
         
-    }
+    
 
 }
 
